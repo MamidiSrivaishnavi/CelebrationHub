@@ -1,68 +1,60 @@
-# 🎉 CelebrationHub — Full Stack Web Application
+# CelebrationHub  
+## Full Stack MERN / MEAN Student Project
 
-CelebrationHub is a full-stack web application that allows users to create and share personalized digital celebration pages for special occasions such as birthdays, anniversaries, and achievements. Users can add event details, upload images, select themes, and view dynamic countdown timers and slideshows on their celebration pages.
-
----
-
-## Features
-
--  User Authentication (Signup & Login)
--  Create Celebration Pages
--  Edit and Delete Celebrations (CRUD Operations)
--  Image Upload & Slideshow
--  Countdown Timer to Event Date
--  Theme Selection
--  Admin Dashboard for User & Content Management
--  Role-Based Access Control (User / Admin)
+CelebrationHub is a full-stack web application designed to allow users to create and share personalized digital celebration pages for special occasions such as birthdays, anniversaries, and achievements. The platform is developed as a learning-oriented project to understand full stack development using a real-world use case.
 
 ---
 
-## User Roles
+## Purpose
 
-Normal User
-- Register and login
-- Create celebration pages
-- Edit or delete own celebrations
-- View celebration pages via unique links
+This project demonstrates:
 
-Admin
-- View all users
-- View all celebrations
-- Delete inappropriate celebrations
-- Manage users
+- CRUD operations using MongoDB, Express, and Node.js  
+- Role-based access control (User and Admin)  
+- REST API architecture  
+- MongoDB schema design using Mongoose  
+- Frontend development using React or Angular  
+- Frontend–backend integration in a full stack application  
 
 ---
 
-##  Tech Stack
+## Architecture
 
-Frontend
-- React.js / Angular
-- HTML, CSS, JavaScript
-- React Router / Angular Routing
-- Axios / HttpClient
+Single backend with optional multiple frontends:
 
-Backend
-- Node.js
-- Express.js
-- REST APIs
-
-Database
-- MongoDB
-- Mongoose ODM
-
-Authentication
-- JWT (JSON Web Tokens)
-- Password hashing using bcrypt
+**React App / Angular App → REST API → Node.js + Express → MongoDB**
 
 ---
 
-##  Pages in the Application
+## Roles
 
-1. Home Page
-2. Login / Signup Page
-3. User Dashboard
-4. Create / Edit Celebration Page
-5. Celebration View Page
-6. Admin Dashboard
+- **User** – Creates and manages celebration pages  
+- **Admin** – Manages users and moderates celebrations  
 
 ---
+
+## Database
+
+- **Users** collection  
+- **Celebrations** collection  
+
+Implemented using **MongoDB** with **Mongoose** ODM.
+
+---
+
+## Authentication
+
+JWT-based authentication with role-based authorization.
+
+---
+
+## Future Enhancements
+
+- Social sharing of celebration pages  
+- Comments and reactions  
+- Email invitations  
+- Analytics dashboard  
+- Cloud-based media storage  
+
+---
+
