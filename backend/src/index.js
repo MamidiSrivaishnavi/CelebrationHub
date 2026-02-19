@@ -1,42 +1,23 @@
+require("dotenv").config();
+
 const express = require('express');
 const mongoose = require('mongoose');
-const User = require('./models/Users');
-const DB_URL = 'mongodb+srv://23wh1a0526_db_user:6aOGosWY1SQxnERo@celebrationhubcluster.3t0hxo8.mongodb.net/'
-const app = express()
+const cors = require('cors');
+const userRoutes = require("./routes/userRoutes");
+const celebrationRoutes = require("./routes/celebrationRoutes");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use("/", userRoutes);
+app.use("/", celebrationRoutes);
+
+const DB_URL = process.env.MONGO_URI;
+
+mongoose.connect(DB_URL) 
+    .then(() => console.log("Database Connected Successfully"))
+    .catch(err => console.log("Error connecting to database", err));
+
 app.listen(3000, () => {
     console.log("Server listening at port 3000");
-})
-
-const seedUserData = async () => {
-    const User = [
-        {
-            username: 'user1',
-            email: 'user1@gmail.com',
-            password: 'user1',
-            role: 'user1'
-        },
-        {
-            username: 'user2',
-            email: 'user2@gmail.com',
-            password: 'user2',
-            role: 'user2'
-        },
-        {
-            username: 'user3',
-            email: 'user3@gmail.com',
-            password: 'user3',
-            role: 'user3'
-        },
-    ]
-}
-app.get('/user', async(req, res) => {
-    try {
-        await mongoose.connect(DB_URL)
-        console.log("Connection Successful")
-        const listOfUsers = User.find({}).flat()
-        res.status(200).json({message:"Connected to database successfully", users: listOfUsers})
-    }
-    catch(err) {
-        console.log
-    }
 })
