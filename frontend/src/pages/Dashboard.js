@@ -64,6 +64,14 @@ const Dashboard = () => {
               <Typography variant='caption'>Date: {cel.eventDate}</Typography>
               <Box sx={{marginTop:2}}>
                 <Button 
+                  variant='contained' 
+                  size='small'
+                  onClick={() => navigate(`/celebration/${cel._id}`)}
+                  sx={{marginRight:1}}
+                >
+                  View
+                </Button>
+                <Button 
                   variant='outlined' 
                   size='small'
                   onClick={() => navigate(`/edit/${cel._id}`)}

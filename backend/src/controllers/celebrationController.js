@@ -9,9 +9,28 @@ exports.getCelebrations = async (req, res) => {
   }
 };
 
+exports.getCelebrationById = async (req, res) => {
+  try {
+    const celebration = await Celebration.findById(req.params.id);
+    if (!celebration) {
+      return res.status(404).json({ message: "Celebration not found" });
+    }
+    res.json(celebration);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching celebration", error: err });
+  }
+};
+
 exports.createCelebration = async (req, res) => {
   try {
-    const newCelebration = new Celebration(req.body);
+    const celebrationData = {
+      ...req.body,
+      images: req.files?.images ? req.files.images.map(f => f.path) : [],
+      audio: req.files?.audio ? req.files.audio[0].path : '',
+      video: req.files?.video ? req.files.video[0].path : ''
+    };
+    
+    const newCelebration = new Celebration(celebrationData);
     await newCelebration.save();
     res.status(201).json(newCelebration);
   } catch (err) {
@@ -21,9 +40,26 @@ exports.createCelebration = async (req, res) => {
 
 exports.updateCelebration = async (req, res) => {
   try {
+    const updateData = { ...req.body };
+
+    // Update images if new ones uploaded
+    if (req.files?.images) {
+      updateData.images = req.files.images.map(f => f.path);
+    }
+
+    // Update audio if new one uploaded
+    if (req.files?.audio) {
+      updateData.audio = req.files.audio[0].path;
+    }
+
+    // Update video if new one uploaded
+    if (req.files?.video) {
+      updateData.video = req.files.video[0].path;
+    }
+
     const updated = await Celebration.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true }
     );
 

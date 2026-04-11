@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import CreateCelebration from "./pages/CreateCelebration";
 import EditCelebration from "./pages/EditCelebration";
+import CelebrationView from "./pages/CelebrationView";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create" element={<CreateCelebration />} />
           <Route path="/edit/:id" element={<EditCelebration />} />
+          <Route path="/celebration/:id" element={<CelebrationView />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

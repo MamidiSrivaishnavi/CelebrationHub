@@ -19,13 +19,29 @@ const celebrationSchema = new mongoose.Schema(
       type: Date,
       required: true
     },
+    eventTime: {
+      type: String,
+      default: "00:00"
+    },
     images: {
       type: [String],
       default: []
     },
+    audio: {
+      type: String,
+      default: ""
+    },
+    audioStartTime: {
+      type: Number,
+      default: 0
+    },
+    video: {
+      type: String,
+      default: ""
+    },
     theme: {
       type: String,
-      default: "default"
+      default: "seventeen"
     }
   },
   { timestamps: true }
