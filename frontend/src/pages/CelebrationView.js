@@ -31,6 +31,24 @@ const CelebrationView = () => {
     try {
       const res = await fetch(`http://localhost:5000/celebrations/${id}`);
       const data = await res.json();
+      
+      // Fix local file paths to include backend URL
+      if (data.images) {
+        data.images = data.images.map(img => 
+          img.startsWith('http') ? img : `http://localhost:5000/${img.replace(/\\/g, '/')}`
+        );
+      }
+      if (data.audio && !data.audio.startsWith('http')) {
+        data.audio = `http://localhost:5000/${data.audio.replace(/\\/g, '/')}`;
+      }
+      if (data.video && !data.video.startsWith('http')) {
+        data.video = `http://localhost:5000/${data.video.replace(/\\/g, '/')}`;
+      }
+      
+      console.log('Fixed celebration data:', data);
+      console.log('Images:', data.images);
+      console.log('Audio:', data.audio);
+      console.log('Video:', data.video);
       setCelebration(data);
     } catch (err) {
       console.log(err);

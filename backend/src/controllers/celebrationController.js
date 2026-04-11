@@ -25,15 +25,18 @@ exports.createCelebration = async (req, res) => {
   try {
     const celebrationData = {
       ...req.body,
-      images: req.files?.images ? req.files.images.map(f => f.path) : [],
-      audio: req.files?.audio ? req.files.audio[0].path : '',
-      video: req.files?.video ? req.files.video[0].path : ''
+      images: req.files?.images ? req.files.images.map(f => f.path || f.location) : [],
+      audio: req.files?.audio ? (req.files.audio[0].path || req.files.audio[0].location) : '',
+      video: req.files?.video ? (req.files.video[0].path || req.files.video[0].location) : ''
     };
+    
+    console.log('Creating celebration with data:', celebrationData);
     
     const newCelebration = new Celebration(celebrationData);
     await newCelebration.save();
     res.status(201).json(newCelebration);
   } catch (err) {
+    console.error('Error creating celebration:', err);
     res.status(500).json({ message: "Error creating celebration", error: err });
   }
 };

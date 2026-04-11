@@ -70,42 +70,77 @@ const AdminDashboard = () => {
   }
 
   return (
-    <Box sx={{padding:4}}>
-      <Typography variant='h4' sx={{color:'#1976d2', fontWeight:'bold', marginBottom:4}}>
+    <Box sx={{padding:4, minHeight:'100vh'}}>
+      <Typography variant='h4' sx={{
+        color:'#5a6a85', 
+        fontWeight:'bold', 
+        marginBottom:4
+      }}>
         Admin Dashboard
       </Typography>
 
-      <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)} sx={{marginBottom:3}}>
+      <Tabs 
+        value={tabValue} 
+        onChange={(e, newValue) => setTabValue(newValue)} 
+        sx={{
+          marginBottom:3,
+          '& .MuiTab-root': {
+            color: '#5a6a85',
+            textTransform: 'none',
+            fontWeight: 600
+          },
+          '& .Mui-selected': {
+            color: '#92A8D1'
+          },
+          '& .MuiTabs-indicator': {
+            backgroundColor: '#92A8D1'
+          }
+        }}
+      >
         <Tab label="Users" />
         <Tab label="Celebrations" />
       </Tabs>
 
       {tabValue === 0 && (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{
+          borderRadius:'16px',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 4px 20px rgba(146, 168, 209, 0.15)'
+        }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell><strong>Name</strong></TableCell>
-                <TableCell><strong>Email</strong></TableCell>
-                <TableCell><strong>Role</strong></TableCell>
-                <TableCell><strong>Created</strong></TableCell>
-                <TableCell><strong>Actions</strong></TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Name</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Email</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Role</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Created</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.map((u) => (
                 <TableRow key={u._id}>
-                  <TableCell>{u.name}</TableCell>
-                  <TableCell>{u.email}</TableCell>
-                  <TableCell>{u.role}</TableCell>
-                  <TableCell>{new Date(u.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{u.name}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{u.email}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{u.role}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{new Date(u.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell>
                     <Button 
                       variant="outlined"
-                      color="error" 
                       size="small"
                       onClick={() => handleDeleteUser(u._id)}
                       disabled={u._id === user._id}
+                      sx={{
+                        borderColor: '#F7CAC9',
+                        color: '#F7CAC9',
+                        textTransform:'none',
+                        borderRadius:'12px',
+                        '&:hover':{
+                          borderColor: '#e5b3b2',
+                          background: 'rgba(247, 202, 201, 0.1)'
+                        }
+                      }}
                     >
                       Delete
                     </Button>
@@ -118,37 +153,60 @@ const AdminDashboard = () => {
       )}
 
       {tabValue === 1 && (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{
+          borderRadius:'16px',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 4px 20px rgba(146, 168, 209, 0.15)'
+        }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell><strong>Title</strong></TableCell>
-                <TableCell><strong>Creator</strong></TableCell>
-                <TableCell><strong>Event Date</strong></TableCell>
-                <TableCell><strong>Created</strong></TableCell>
-                <TableCell><strong>Actions</strong></TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Title</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Creator</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Event Date</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Created</TableCell>
+                <TableCell sx={{color:'#5a6a85', fontWeight:'bold'}}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {celebrations.map((cel) => (
                 <TableRow key={cel._id}>
-                  <TableCell>{cel.title}</TableCell>
-                  <TableCell>{cel.userId?.name || 'Unknown'}</TableCell>
-                  <TableCell>{new Date(cel.eventDate).toLocaleDateString()}</TableCell>
-                  <TableCell>{new Date(cel.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{cel.title}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{cel.userId?.name || 'Unknown'}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{new Date(cel.eventDate).toLocaleDateString()}</TableCell>
+                  <TableCell sx={{color:'#5a6a85'}}>{new Date(cel.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell>
                     <Button 
                       size="small" 
                       onClick={() => navigate(`/celebration/${cel._id}`)}
-                      sx={{marginRight:1}}
+                      sx={{
+                        marginRight:1,
+                        background: '#92A8D1',
+                        color: '#fff',
+                        textTransform:'none',
+                        borderRadius:'12px',
+                        '&:hover':{
+                          background: '#7a91c4'
+                        }
+                      }}
                     >
                       View
                     </Button>
                     <Button 
                       variant="outlined"
-                      color="error" 
                       size="small"
                       onClick={() => handleDeleteCelebration(cel._id)}
+                      sx={{
+                        borderColor: '#F7CAC9',
+                        color: '#F7CAC9',
+                        textTransform:'none',
+                        borderRadius:'12px',
+                        '&:hover':{
+                          borderColor: '#e5b3b2',
+                          background: 'rgba(247, 202, 201, 0.1)'
+                        }
+                      }}
                     >
                       Delete
                     </Button>
