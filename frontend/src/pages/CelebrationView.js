@@ -24,10 +24,6 @@ const CelebrationView = () => {
     seventeen: 'linear-gradient(135deg, #F7CAC9 0%, #92A8D1 100%)'
   };
 
-  useEffect(() => {
-    fetchCelebration();
-  }, [id]);
-
   const fetchCelebration = async () => {
     try {
       const res = await fetch(`${API_URL}/celebrations/${id}`);
@@ -57,6 +53,9 @@ const CelebrationView = () => {
   };
 
   useEffect(() => {
+    fetchCelebration();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
     if (!celebration) return;
 
     const timer = setInterval(() => {

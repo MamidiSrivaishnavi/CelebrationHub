@@ -21,10 +21,6 @@ const EditCelebration = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchCelebration();
-  }, []);
-
   const fetchCelebration = async () => {
     try {
       const res = await fetch(`${API_URL}/celebrations/${id}`);
@@ -41,6 +37,11 @@ const EditCelebration = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    fetchCelebration();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleUpdate = async () => {
     try {

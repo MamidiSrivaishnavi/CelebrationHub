@@ -49,7 +49,7 @@ const CreateCelebration = () => {
         body: formData,
       });
 
-      const data = await res.json();
+      await res.json();
       alert("Celebration created!");
       navigate('/dashboard');
     } catch (err) {
