@@ -65,6 +65,14 @@ const Dashboard = () => {
               <Box sx={{marginTop:2}}>
                 <Button 
                   variant='outlined' 
+                  size='small'
+                  onClick={() => navigate(`/edit/${cel._id}`)}
+                  sx={{marginRight:1}}
+                >
+                  Edit
+                </Button>
+                <Button 
+                  variant='outlined' 
                   color='error' 
                   size='small'
                   onClick={() => handleDelete(cel._id)}
