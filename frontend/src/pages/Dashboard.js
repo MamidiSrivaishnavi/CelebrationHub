@@ -208,6 +208,30 @@ const Dashboard = () => {
                 <Button 
                   variant='outlined' 
                   size='small'
+                  onClick={() => {
+                    const url = `${window.location.origin}/celebration/${cel._id}`;
+                    navigator.clipboard.writeText(url);
+                    alert('Link copied to clipboard!');
+                  }}
+                  sx={{
+                    flex: 1,
+                    minWidth: '80px',
+                    borderColor: '#92A8D1',
+                    color: '#92A8D1',
+                    textTransform:'none',
+                    borderRadius: { xs: '8px', sm: '12px' },
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    '&:hover':{
+                      borderColor: '#7a91c4',
+                      background: 'rgba(146, 168, 209, 0.1)'
+                    }
+                  }}
+                >
+                  Share
+                </Button>
+                <Button 
+                  variant='outlined' 
+                  size='small'
                   onClick={() => navigate(`/edit/${cel._id}`)}
                   sx={{
                     flex: 1,
