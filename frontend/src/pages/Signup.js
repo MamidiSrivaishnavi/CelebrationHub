@@ -1,35 +1,26 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useState } from 'react';
 
-const Login = () => {
+const Signup = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setUser } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch("http://localhost:5000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password, role: "user" }),
       });
 
       const data = await res.json();
-      
-      if (data.user) {
-        setUser(data.user);
-        navigate('/dashboard');
-      } else {
-        alert(data.message || "Login failed");
-      }
+      console.log(data);
+      alert("Signup successful!");
     } catch (err) {
       console.log(err);
-      alert("Login failed");
     }
   };
 
@@ -37,8 +28,15 @@ const Login = () => {
     <Box sx={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:4, marginTop:10}}>
 
       <Typography variant='h4' sx={{color:'#1976d2', fontWeight:'bold'}}>
-        Login
+        Signup
       </Typography>
+
+      <TextField 
+        label='Name' 
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        sx={{width:'300px'}} 
+      />
 
       <TextField 
         label='Email' 
@@ -55,16 +53,16 @@ const Login = () => {
         sx={{width:'300px'}} 
       />
 
-      <Button variant='contained' onClick={handleLogin}>
-        Login
+      <Button variant='contained' onClick={handleSignup}>
+        Signup
       </Button>
 
       <Typography sx={{marginTop:2}}>
-        Don't have an account? <a href="/signup" style={{color:'#1976d2'}}>Signup</a>
+        Already have an account? <a href="/" style={{color:'#1976d2'}}>Login</a>
       </Typography>
 
     </Box>
   )
 }
 
-export default Login;
+export default Signup;
