@@ -9,7 +9,15 @@ const celebrationRoutes = require("./routes/celebrationRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL
+  ].filter(Boolean),
+  credentials: true
+}));
+
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use("/", userRoutes);
@@ -22,6 +30,7 @@ mongoose.connect(DB_URL)
     .then(() => console.log("Database Connected Successfully"))
     .catch(err => console.log("Error connecting to database", err));
 
-app.listen(5000, () => {
-    console.log("Server listening at port 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server listening at port ${PORT}`);
 })

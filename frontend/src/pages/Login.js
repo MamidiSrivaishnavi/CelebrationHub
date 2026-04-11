@@ -2,17 +2,21 @@ import { Box, Button, TextField, Typography, Paper, Container } from '@mui/mater
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     if (e) e.preventDefault();
+    setLoading(true);
+
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,6 +26,11 @@ const Login = () => {
 
       const data = await res.json();
       
+      if (!res.ok) {
+        alert(data.message || "Login failed");
+        return;
+      }
+      
       if (data.user) {
         setUser(data.user);
         navigate('/dashboard');
@@ -30,7 +39,9 @@ const Login = () => {
       }
     } catch (err) {
       console.log(err);
-      alert("Login failed");
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,6 +131,7 @@ const Login = () => {
               type="submit"
               variant='contained' 
               size='large'
+              disabled={loading}
               sx={{
                 marginTop:1,
                 padding:'12px',
@@ -135,10 +147,14 @@ const Login = () => {
                   boxShadow: '0 6px 30px rgba(146, 168, 209, 0.4)',
                   transform:'translateY(-2px)',
                   transition:'all 0.3s ease'
+                },
+                '&:disabled': {
+                  background: '#ccc',
+                  color: '#666'
                 }
               }}
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </Button>
 
             <Box sx={{textAlign:'center', marginTop:1}}>

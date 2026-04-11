@@ -2,11 +2,13 @@ import { Box, Typography, Button, Card, CardContent, CardMedia } from '@mui/mate
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config';
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [celebrations, setCelebrations] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
@@ -17,32 +19,47 @@ const Dashboard = () => {
   }, [user, navigate]);
 
   const fetchCelebrations = async () => {
+    setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/celebrations");
+      const res = await fetch(`${API_URL}/celebrations`);
       const data = await res.json();
       
       const fixedData = data.map(cel => ({
         ...cel,
         images: cel.images?.map(img => 
-          img.startsWith('http') ? img : `http://localhost:5000/${img.replace(/\\/g, '/')}`
+          img.startsWith('http') ? img : `${API_URL}/${img.replace(/\\/g, '/')}`
         ) || []
       }));
       
       setCelebrations(fixedData);
     } catch (err) {
       console.log(err);
+      alert("Failed to load celebrations");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this celebration?")) {
+      return;
+    }
+
     try {
-      await fetch(`http://localhost:5000/celebrations/${id}`, {
+      const res = await fetch(`${API_URL}/celebrations/${id}`, {
         method: "DELETE",
       });
+
+      if (!res.ok) {
+        alert("Failed to delete celebration");
+        return;
+      }
+
       alert("Deleted!");
       fetchCelebrations();
     } catch (err) {
       console.log(err);
+      alert("Something went wrong");
     }
   };
 
@@ -88,7 +105,9 @@ const Dashboard = () => {
         Your Celebrations
       </Typography>
 
-      {celebrations.filter(cel => cel.userId === user._id).length === 0 ? (
+      {loading ? (
+        <Typography sx={{color:'#5a6a85', textAlign:'center', padding:4}}>Loading celebrations...</Typography>
+      ) : celebrations.filter(cel => cel.userId === user._id).length === 0 ? (
         <Typography sx={{color:'#5a6a85'}}>No celebrations yet</Typography>
       ) : (
         <Box sx={{ 

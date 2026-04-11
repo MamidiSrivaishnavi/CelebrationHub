@@ -1,3 +1,4 @@
+import API_URL from '../config';
 import { Box, Button, Typography } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
@@ -29,20 +30,20 @@ const CelebrationView = () => {
 
   const fetchCelebration = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/celebrations/${id}`);
+      const res = await fetch(`${API_URL}/celebrations/${id}`);
       const data = await res.json();
       
       // Fix local file paths to include backend URL
       if (data.images) {
         data.images = data.images.map(img => 
-          img.startsWith('http') ? img : `http://localhost:5000/${img.replace(/\\/g, '/')}`
+          img.startsWith('http') ? img : `${API_URL}/${img.replace(/\\/g, '/')}`
         );
       }
       if (data.audio && !data.audio.startsWith('http')) {
-        data.audio = `http://localhost:5000/${data.audio.replace(/\\/g, '/')}`;
+        data.audio = `${API_URL}/${data.audio.replace(/\\/g, '/')}`;
       }
       if (data.video && !data.video.startsWith('http')) {
-        data.video = `http://localhost:5000/${data.video.replace(/\\/g, '/')}`;
+        data.video = `${API_URL}/${data.video.replace(/\\/g, '/')}`;
       }
       
       console.log('Fixed celebration data:', data);

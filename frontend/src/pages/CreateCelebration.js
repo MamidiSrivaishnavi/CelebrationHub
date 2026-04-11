@@ -1,3 +1,4 @@
+import API_URL from '../config';
 import { Box, Button, TextField, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -43,7 +44,7 @@ const CreateCelebration = () => {
         formData.append('video', video);
       }
 
-      const res = await fetch("http://localhost:5000/celebrations", {
+      const res = await fetch(`${API_URL}/celebrations`, {
         method: "POST",
         body: formData,
       });

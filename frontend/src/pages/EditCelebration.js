@@ -1,3 +1,4 @@
+import API_URL from '../config';
 import { Box, Button, TextField, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,7 +27,7 @@ const EditCelebration = () => {
 
   const fetchCelebration = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/celebrations/${id}`);
+      const res = await fetch(`${API_URL}/celebrations/${id}`);
       const data = await res.json();
       setTitle(data.title);
       setMessage(data.message);
@@ -73,7 +74,7 @@ const EditCelebration = () => {
         formData.append('removeVideo', 'true');
       }
 
-      await fetch(`http://localhost:5000/celebrations/${id}`, {
+      await fetch(`${API_URL}/celebrations/${id}`, {
         method: "PUT",
         body: formData,
       });

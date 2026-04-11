@@ -2,6 +2,7 @@ import { Box, Typography, Card, CardContent, CardMedia, Button } from '@mui/mate
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config';
 
 const AllCelebrations = () => {
   const [celebrations, setCelebrations] = useState([]);
@@ -18,14 +19,14 @@ const AllCelebrations = () => {
 
   const fetchCelebrations = async () => {
     try {
-      const res = await fetch("http://localhost:5000/celebrations");
+      const res = await fetch(`${API_URL}/celebrations`);
       const data = await res.json();
       
       // Fix local file paths
       const fixedData = data.map(cel => ({
         ...cel,
         images: cel.images?.map(img => 
-          img.startsWith('http') ? img : `http://localhost:5000/${img.replace(/\\/g, '/')}`
+          img.startsWith('http') ? img : `${API_URL}/${img.replace(/\\/g, '/')}`
         ) || []
       }));
       

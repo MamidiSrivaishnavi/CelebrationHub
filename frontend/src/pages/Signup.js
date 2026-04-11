@@ -1,17 +1,21 @@
 import { Box, Button, TextField, Typography, Paper, Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     if (e) e.preventDefault();
+    setLoading(true);
+
     try {
-      const res = await fetch("http://localhost:5000/users", {
+      const res = await fetch(`${API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,12 +24,20 @@ const Signup = () => {
       });
 
       const data = await res.json();
+      
+      if (!res.ok) {
+        alert(data.message || "Signup failed");
+        return;
+      }
+
       console.log(data);
       alert("Signup successful! Please login.");
       navigate('/');
     } catch (err) {
       console.log(err);
-      alert("Signup failed");
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -138,6 +150,7 @@ const Signup = () => {
               type="submit"
               variant='contained' 
               size='large'
+              disabled={loading}
               sx={{
                 marginTop:1,
                 padding:'12px',
@@ -153,10 +166,14 @@ const Signup = () => {
                   boxShadow: '0 6px 30px rgba(146, 168, 209, 0.4)',
                   transform:'translateY(-2px)',
                   transition:'all 0.3s ease'
+                },
+                '&:disabled': {
+                  background: '#ccc',
+                  color: '#666'
                 }
               }}
             >
-              Sign Up
+              {loading ? 'Creating Account...' : 'Sign Up'}
             </Button>
 
             <Box sx={{textAlign:'center', marginTop:1}}>

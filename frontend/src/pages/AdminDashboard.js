@@ -1,3 +1,4 @@
+import API_URL from '../config';
 import { Box, Typography, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +22,7 @@ const AdminDashboard = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/admin/users");
+      const res = await fetch(`${API_URL}/admin/users`);
       const data = await res.json();
       setUsers(data);
     } catch (err) {
@@ -31,7 +32,7 @@ const AdminDashboard = () => {
 
   const fetchCelebrations = async () => {
     try {
-      const res = await fetch("http://localhost:5000/admin/celebrations");
+      const res = await fetch(`${API_URL}/admin/celebrations`);
       const data = await res.json();
       setCelebrations(data);
     } catch (err) {
@@ -42,7 +43,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
-      await fetch(`http://localhost:5000/admin/users/${id}`, {
+      await fetch(`${API_URL}/admin/users/${id}`, {
         method: "DELETE",
       });
       alert("User deleted!");
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
   const handleDeleteCelebration = async (id) => {
     if (!window.confirm('Are you sure you want to delete this celebration?')) return;
     try {
-      await fetch(`http://localhost:5000/admin/celebrations/${id}`, {
+      await fetch(`${API_URL}/admin/celebrations/${id}`, {
         method: "DELETE",
       });
       alert("Celebration deleted!");
