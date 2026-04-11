@@ -11,7 +11,7 @@ exports.getCelebrations = async (req, res) => {
 
 exports.getCelebrationById = async (req, res) => {
   try {
-    const celebration = await Celebration.findById(req.params.id);
+    const celebration = await Celebration.findById(req.params.id).populate('userId', 'name');
     if (!celebration) {
       return res.status(404).json({ message: "Celebration not found" });
     }
@@ -42,19 +42,33 @@ exports.updateCelebration = async (req, res) => {
   try {
     const updateData = { ...req.body };
 
-    // Update images if new ones uploaded
-    if (req.files?.images) {
-      updateData.images = req.files.images.map(f => f.path);
+    // Handle images: combine kept existing + new uploads
+    let finalImages = [];
+    
+    if (req.body.keepExistingImages) {
+      const keptImages = JSON.parse(req.body.keepExistingImages);
+      finalImages = [...keptImages];
     }
+    
+    if (req.files?.images) {
+      const newImages = req.files.images.map(f => f.path);
+      finalImages = [...finalImages, ...newImages];
+    }
+    
+    updateData.images = finalImages;
 
     // Update audio if new one uploaded
     if (req.files?.audio) {
       updateData.audio = req.files.audio[0].path;
+    } else if (req.body.removeAudio === 'true') {
+      updateData.audio = '';
     }
 
     // Update video if new one uploaded
     if (req.files?.video) {
       updateData.video = req.files.video[0].path;
+    } else if (req.body.removeVideo === 'true') {
+      updateData.video = '';
     }
 
     const updated = await Celebration.findByIdAndUpdate(

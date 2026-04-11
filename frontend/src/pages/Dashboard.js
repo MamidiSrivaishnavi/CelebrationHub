@@ -56,7 +56,9 @@ const Dashboard = () => {
       {celebrations.length === 0 ? (
         <Typography>No celebrations yet</Typography>
       ) : (
-        celebrations.map((cel) => (
+        celebrations
+          .filter(cel => cel.userId === user._id)
+          .map((cel) => (
           <Card key={cel._id} sx={{marginBottom:2, maxWidth:600}}>
             <CardContent>
               <Typography variant='h6'>{cel.title}</Typography>

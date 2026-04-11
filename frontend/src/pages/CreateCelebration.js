@@ -9,6 +9,7 @@ const CreateCelebration = () => {
   const [eventDate, setEventDate] = useState('');
   const [eventTime, setEventTime] = useState('00:00');
   const [images, setImages] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
   const [audio, setAudio] = useState(null);
   const [audioStartTime, setAudioStartTime] = useState(0);
   const [video, setVideo] = useState(null);
@@ -28,8 +29,8 @@ const CreateCelebration = () => {
       formData.append('theme', theme);
 
       // Add images
-      for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i]);
+      for (let i = 0; i < imageFiles.length; i++) {
+        formData.append('images', imageFiles[i]);
       }
 
       // Add audio
@@ -120,8 +121,33 @@ const CreateCelebration = () => {
           type='file' 
           accept='image/png,image/jpeg,image/jpg,image/gif,image/webp,image/bmp' 
           multiple
-          onChange={(e) => setImages(e.target.files)}
+          onChange={(e) => {
+            const filesArray = Array.from(e.target.files);
+            setImageFiles(filesArray);
+            setImages(filesArray.map(file => URL.createObjectURL(file)));
+          }}
         />
+        {images.length > 0 && (
+          <Box sx={{display:'flex', flexWrap:'wrap', gap:1, marginTop:2}}>
+            {images.map((img, index) => (
+              <Box key={index} sx={{position:'relative'}}>
+                <img src={img} alt={`preview-${index}`} style={{width:'80px', height:'80px', objectFit:'cover', borderRadius:'4px'}} />
+                <Button
+                  size='small'
+                  onClick={() => {
+                    const newImages = images.filter((_, i) => i !== index);
+                    const newFiles = imageFiles.filter((_, i) => i !== index);
+                    setImages(newImages);
+                    setImageFiles(newFiles);
+                  }}
+                  sx={{position:'absolute', top:-8, right:-8, minWidth:'24px', width:'24px', height:'24px', borderRadius:'50%', background:'red', color:'white', padding:0, fontSize:'12px'}}
+                >
+                  ✕
+                </Button>
+              </Box>
+            ))}
+          </Box>
+        )}
       </Box>
 
       <Box sx={{width:'400px'}}>
@@ -132,14 +158,26 @@ const CreateCelebration = () => {
           onChange={(e) => setAudio(e.target.files[0])}
         />
         {audio && (
-          <TextField
-            label='Start music (seconds before event)'
-            type='number'
-            value={audioStartTime}
-            onChange={(e) => setAudioStartTime(e.target.value)}
-            sx={{width:'100%', marginTop:2}}
-            helperText='Example: 14 means music starts 14 seconds before 00:00:00'
-          />
+          <Box sx={{marginTop:2}}>
+            <Box sx={{display:'flex', alignItems:'center', gap:1, marginBottom:1}}>
+              <Typography variant='caption'>🎵 {audio.name}</Typography>
+              <Button
+                size='small'
+                onClick={() => setAudio(null)}
+                sx={{minWidth:'24px', width:'24px', height:'24px', borderRadius:'50%', background:'red', color:'white', padding:0, fontSize:'12px'}}
+              >
+                ✕
+              </Button>
+            </Box>
+            <TextField
+              label='Start music (seconds before event)'
+              type='number'
+              value={audioStartTime}
+              onChange={(e) => setAudioStartTime(e.target.value)}
+              sx={{width:'100%'}}
+              helperText='Example: 14 means music starts 14 seconds before 00:00:00'
+            />
+          </Box>
         )}
       </Box>
 
@@ -150,6 +188,18 @@ const CreateCelebration = () => {
           accept='video/*'
           onChange={(e) => setVideo(e.target.files[0])}
         />
+        {video && (
+          <Box sx={{display:'flex', alignItems:'center', gap:1, marginTop:1}}>
+            <Typography variant='caption'>🎬 {video.name}</Typography>
+            <Button
+              size='small'
+              onClick={() => setVideo(null)}
+              sx={{minWidth:'24px', width:'24px', height:'24px', borderRadius:'50%', background:'red', color:'white', padding:0, fontSize:'12px'}}
+            >
+              ✕
+            </Button>
+          </Box>
+        )}
       </Box>
 
       <Button variant='contained' onClick={handleCreate}>

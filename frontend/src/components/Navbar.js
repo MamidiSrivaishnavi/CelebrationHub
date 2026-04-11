@@ -15,10 +15,13 @@ const Navbar = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Typography variant='h6' sx={{flexGrow:1}}>
+        <Typography variant='h6' sx={{flexGrow:1, cursor:'pointer'}} onClick={() => navigate('/celebrations')}>
           CelebrationHub
         </Typography>
-        {user && (
+        <Button color='inherit' onClick={() => navigate('/celebrations')}>
+          Browse
+        </Button>
+        {user ? (
           <Box>
             <Button color='inherit' onClick={() => navigate('/dashboard')}>
               Dashboard
@@ -27,6 +30,10 @@ const Navbar = () => {
               Logout
             </Button>
           </Box>
+        ) : (
+          <Button color='inherit' onClick={() => navigate('/')}>
+            Login
+          </Button>
         )}
       </Toolbar>
     </AppBar>

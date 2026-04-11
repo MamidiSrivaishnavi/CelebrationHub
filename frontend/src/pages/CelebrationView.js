@@ -131,8 +131,12 @@ const CelebrationView = () => {
       color:'white'
     }}>
       
-      <Typography variant='h3' sx={{fontWeight:'bold', marginBottom:3, textAlign:'center'}}>
+      <Typography variant='h3' sx={{fontWeight:'bold', marginBottom:1, textAlign:'center'}}>
         {celebration.title}
+      </Typography>
+      
+      <Typography variant='body2' sx={{marginBottom:3, opacity:0.8}}>
+        Created by {celebration.userId?.name || 'Anonymous'}
       </Typography>
 
       {!isEventTime ? (
