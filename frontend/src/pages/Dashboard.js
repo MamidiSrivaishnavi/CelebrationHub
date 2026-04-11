@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import API_URL from '../config';
 
 const Dashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const navigate = useNavigate();
   const [celebrations, setCelebrations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,6 +48,9 @@ const Dashboard = () => {
     try {
       const res = await fetch(`${API_URL}/celebrations/${id}`, {
         method: "DELETE",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       if (!res.ok) {

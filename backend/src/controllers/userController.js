@@ -1,5 +1,6 @@
 const User = require("../models/Users");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.getUsers = async (req, res) => {
   try {
@@ -46,7 +47,19 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    res.status(200).json({ message: "Login successful", user });
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET || "celebrationhub_secret_key",
+      { expiresIn: "7d" }
+    );
+
+    const { password: _, ...userWithoutPassword } = user._doc;
+
+    res.status(200).json({ 
+      message: "Login successful", 
+      token,
+      user: userWithoutPassword 
+    });
 
   } catch (err) {
     res.status(500).json({ message: "Login error", error: err });

@@ -1,7 +1,8 @@
 import API_URL from '../config';
 import { Box, Button, TextField, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const EditCelebration = () => {
   const [title, setTitle] = useState('');
@@ -19,6 +20,7 @@ const EditCelebration = () => {
   const [keepExistingAudio, setKeepExistingAudio] = useState(true);
   const [keepExistingVideo, setKeepExistingVideo] = useState(true);
   const { id } = useParams();
+  const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const fetchCelebration = async () => {
@@ -77,6 +79,9 @@ const EditCelebration = () => {
 
       await fetch(`${API_URL}/celebrations/${id}`, {
         method: "PUT",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData,
       });
       alert("Updated!");

@@ -15,7 +15,7 @@ const CreateCelebration = () => {
   const [audioStartTime, setAudioStartTime] = useState(0);
   const [video, setVideo] = useState(null);
   const [theme, setTheme] = useState('seventeen');
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleCreate = async () => {
@@ -46,6 +46,9 @@ const CreateCelebration = () => {
 
       const res = await fetch(`${API_URL}/celebrations`, {
         method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData,
       });
 

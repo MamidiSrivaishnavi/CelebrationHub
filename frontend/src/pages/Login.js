@@ -8,7 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { setUser } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -31,8 +31,8 @@ const Login = () => {
         return;
       }
       
-      if (data.user) {
-        setUser(data.user);
+      if (data.user && data.token) {
+        login(data.user, data.token);
         navigate('/dashboard');
       } else {
         alert(data.message || "Login failed");
