@@ -1,7 +1,9 @@
-# CelebrationHub  
-## Full Stack MERN / MEAN Student Project
+# CelebrationHub
+## Full Stack MERN Student Project
 
-CelebrationHub is a full-stack web application designed to allow users to create and share personalized digital celebration pages for special occasions such as birthdays, anniversaries, and achievements. The platform is developed as a learning-oriented project to understand full stack development using a real-world use case.
+🔗 **Live Demo:** https://celebration-hub-cve8.vercel.app/
+
+CelebrationHub is a full-stack web application that allows users to create and share personalized digital celebration pages for occasions like birthdays, anniversaries, and achievements.
 
 ---
 
@@ -9,52 +11,81 @@ CelebrationHub is a full-stack web application designed to allow users to create
 
 This project demonstrates:
 
-- CRUD operations using MongoDB, Express, and Node.js  
-- Role-based access control (User and Admin)  
-- REST API architecture  
-- MongoDB schema design using Mongoose  
-- Frontend development using React or Angular  
-- Frontend–backend integration in a full stack application  
+- CRUD operations using MongoDB, Express, and Node.js
+- Role-based access control (User and Admin)
+- REST API architecture
+- MongoDB schema design using Mongoose
+- Frontend development using React
+- File upload and cloud storage integration with Cloudinary
+- User authentication with password hashing (bcrypt)
+- Responsive UI design with Material-UI (MUI)
+
+---
+
+## Tech Stack
+
+### Backend
+- Node.js, Express.js
+- MongoDB, Mongoose
+- Cloudinary, Multer
+- bcrypt, CORS
+
+### Frontend
+- React
+- React Router
+- Material-UI (MUI)
+- Emotion
+- Context API
 
 ---
 
 ## Architecture
 
-Single backend with optional multiple frontends:
+**React App → REST API → Node.js + Express → MongoDB**
 
-**React App / Angular App → REST API → Node.js + Express → MongoDB**
+---
+
+## Features
+
+### User Features
+- User registration and login
+- Create celebration pages with images, audio, video, and themes
+- Edit and delete own celebrations
+- View all public celebrations
+- Personal dashboard
+
+### Admin Features
+- View all users
+- View all celebrations
+- Moderate content
+
+### Celebration Page Features
+- Responsive design
+- Media playback (images, audio, video)
+- Confetti animations
+- Shareable links
 
 ---
 
 ## Roles
 
-- **User** – Creates and manages celebration pages  
-- **Admin** – Manages users and moderates celebrations  
+- **User** – Creates and manages celebration pages
+- **Admin** – Manages users and moderates content
 
 ---
 
-## Database
+## Deployment
 
-- **Users** collection  
-- **Celebrations** collection  
-
-Implemented using **MongoDB** with **Mongoose** ODM.
-
----
-
-## Authentication
-
-JWT-based authentication with role-based authorization.
+- **Frontend:** Vercel  
+- **Backend:** Render  
+- **Database:** MongoDB Atlas  
+- **Media Storage:** Cloudinary  
 
 ---
 
-## Future Enhancements
+## Setup Instructions
 
-- Social sharing of celebration pages  
-- Comments and reactions  
-- Email invitations  
-- Analytics dashboard  
-- Cloud-based media storage  
-
----
-
+### Backend
+```bash
+cd backend
+npm install
