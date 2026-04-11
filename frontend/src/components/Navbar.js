@@ -26,6 +26,11 @@ const Navbar = () => {
             <Button color='inherit' onClick={() => navigate('/dashboard')}>
               Dashboard
             </Button>
+            {user.role === 'admin' && (
+              <Button color='inherit' onClick={() => navigate('/admin')}>
+                Admin
+              </Button>
+            )}
             <Button color='inherit' onClick={handleLogout}>
               Logout
             </Button>

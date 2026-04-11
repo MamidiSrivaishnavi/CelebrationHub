@@ -167,7 +167,7 @@ const EditCelebration = () => {
                     sx={{cursor:'pointer', position:'relative'}}
                   >
                     <img 
-                      src={`http://localhost:5000/${img}`} 
+                      src={img} 
                       alt={`existing-${index}`} 
                       style={{
                         width:'80px', 
@@ -245,7 +245,7 @@ const EditCelebration = () => {
             </Typography>
             <Box onClick={() => setKeepExistingAudio(false)} sx={{cursor:'pointer'}}>
               <audio controls style={{width:'100%', height:'40px', pointerEvents:'none'}}>
-                <source src={`http://localhost:5000/${existingData.audio}`} type='audio/mpeg' />
+                <source src={existingData.audio} type='audio/mpeg' />
               </audio>
             </Box>
           </Box>
@@ -300,7 +300,7 @@ const EditCelebration = () => {
             </Typography>
             <Box onClick={() => setKeepExistingVideo(false)} sx={{cursor:'pointer'}}>
               <video controls style={{width:'100%', maxHeight:'200px', borderRadius:'8px', pointerEvents:'none'}}>
-                <source src={`http://localhost:5000/${existingData.video}`} type='video/mp4' />
+                <source src={existingData.video} type='video/mp4' />
               </video>
             </Box>
           </Box>

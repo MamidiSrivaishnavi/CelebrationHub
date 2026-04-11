@@ -34,7 +34,7 @@ const AllCelebrations = () => {
                 <CardMedia
                   component="img"
                   height="200"
-                  image={`http://localhost:5000/${cel.images[0]}`}
+                  image={cel.images[0]}
                   alt={cel.title}
                   sx={{objectFit:'cover'}}
                 />

@@ -177,7 +177,7 @@ const CelebrationView = () => {
               boxShadow:'0 8px 32px rgba(0,0,0,0.3)'
             }}>
               <img
-                src={`http://localhost:5000/${celebration.images[currentImageIndex]}`}
+                src={celebration.images[currentImageIndex]}
                 alt='celebration'
                 style={{width:'100%', height:'100%', objectFit:'cover'}}
               />
@@ -187,7 +187,7 @@ const CelebrationView = () => {
           {celebration.video && (
             <Box sx={{marginBottom:3}}>
               <video
-                src={`http://localhost:5000/${celebration.video}`}
+                src={celebration.video}
                 controls
                 style={{width:'600px', borderRadius:'8px', boxShadow:'0 8px 32px rgba(0,0,0,0.3)'}}
               />
@@ -213,7 +213,7 @@ const CelebrationView = () => {
       {celebration.audio && (
         <Box>
           <audio ref={audioRef} loop>
-            <source src={`http://localhost:5000/${celebration.audio}`} type='audio/mpeg' />
+            <source src={celebration.audio} type='audio/mpeg' />
           </audio>
           <Button
             variant='contained'

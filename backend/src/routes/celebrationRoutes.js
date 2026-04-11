@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const celebrationController = require("../controllers/celebrationController");
-const upload = require("../middleware/upload");
+const upload = require("../config/cloudinary");
 
 router.get("/celebrations", celebrationController.getCelebrations);
 router.get("/celebrations/:id", celebrationController.getCelebrationById);

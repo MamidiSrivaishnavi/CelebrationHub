@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const userRoutes = require("./routes/userRoutes");
 const celebrationRoutes = require("./routes/celebrationRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use("/", userRoutes);
 app.use("/", celebrationRoutes);
+app.use("/", adminRoutes);
 
 const DB_URL = process.env.MONGO_URI;
 
