@@ -56,6 +56,8 @@ const CelebrationView = () => {
     fetchCelebration();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  useEffect(() => {
     if (!celebration) return;
 
     const timer = setInterval(() => {
